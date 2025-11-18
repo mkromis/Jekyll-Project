@@ -2,33 +2,7 @@
 
 # Globals
 # Path to JSON file
-set json_file "Settings/restore.jsonc"
-
-# # Sanity Checks
-# if not test -f $restore
-#     echo "Error: File '$restore' was not found."
-#     exit 1
-# end
-
-
-# # read portions of the settings file
-# set moveFolders(jq -r '.moveFolders[]' $restore)
-# #set moveFolders(jq -r '.[].moveFolders' $restore)
-
-# # Output Test
-# for moveFolder in moveFolders
-#     echo " * '$moveFolder'"
-# end
-
-# # $argv holds all arguments passed to the script
-# echo "All arguments: $argv"
-
-# # Access individual arguments
-# echo "First argument: $argv[1]"
-# echo "Second argument: $argv[2]"
-
-# # Access a range (from 2nd to last)
-# echo "Remaining arguments: $argv[2..-1]"
+set json_file (realpath "Settings/restore.jsonc")
 
 # Check if file exists
 if not test -f $json_file
@@ -36,13 +10,29 @@ if not test -f $json_file
     exit 1
 end
 
-# Read and parse JSON using jq
 
+# Check if exactly 2 arguments were passed
+set argc (count $argv)
+if test $argc -ne 2
+    echo "Usage: $argv[1] <arg1> <arg2>"
+    echo "This will attempt to move from old config directory to new config directory"
+    exit 1
+end
+
+echo $json_file
+set source (realpath $argv[1])
+set dest (realpath $argv[2])
+
+# Read and parse JSON using jq
 # Extract array values into a Fish list
 set folders (jq -r '.foldersToMove[]' $json_file)
 
 # Output results
 echo "Moving Folders:"
 for folder in $folders
-    echo " * $folder"
+    set src (realpath "$source/$folder")
+    set dst (realpath "$dest/$folder")
+    if test -d $src
+        echo " * $src -> $dst"
+    end
 end
