@@ -1,0 +1,3 @@
+cachyos-snapper-support
+cachyos-gaming-meta
+cachyos-gaming-applications
