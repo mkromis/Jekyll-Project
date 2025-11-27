@@ -1,0 +1,13 @@
+bridge-utils
+dnsmasq
+iproute2
+libayatana-appindicator
+libvirt
+qemu-base
+qemu-desktop
+qemu-emulators-full
+qemu-full
+qemu-user-static
+samba
+swtpm
+virt-manager

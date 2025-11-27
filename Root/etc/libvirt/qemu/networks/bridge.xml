@@ -1,0 +1,25 @@
+<network>
+  <!-- Name of the virtual network -->
+  <name>default</name>
+
+  <!-- Optional: UUID for the network (can be generated with uuidgen) -->
+  <!-- <uuid>12345678-1234-5678-1234-567812345678</uuid> -->
+
+  <!-- Forwarding mode: NAT to the host's physical network -->
+  <forward mode="nat"/>
+
+  <!-- Bridge interface created by libvirt -->
+  <bridge name="virbr10" stp="on" delay="0"/>
+
+  <!-- IP configuration for the virtual network -->
+  <ip address="192.168.100.1" netmask="255.255.255.0">
+    <dhcp>
+      <!-- DHCP range for guests -->
+      <range start="192.168.100.100" end="192.168.100.200"/>
+      <!-- Optional static DHCP mapping -->
+      <!--
+      <host mac="52:54:00:aa:bb:cc" name="vm1" ip="192.168.100.50"/>
+      -->
+    </dhcp>
+  </ip>
+</network>
